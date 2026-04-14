@@ -37,11 +37,13 @@ pipeline {
 
         stage('Get ec2 public ip') {
             steps {
-                script {
-                    env.SERVER_IP = sh (
-                        script: 'terraform output -raw game_server_public_ip',
-                        returnStdout: true
-                    ).trim()
+                dir('terraform') {
+                    script {
+                        env.SERVER_IP = sh (
+                            script: 'terraform output -raw game_server_public_ip',
+                            returnStdout: true
+                        ).trim()
+                    }
                 }
             }
         }
