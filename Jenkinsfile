@@ -43,6 +43,11 @@ pipeline {
                             script: 'terraform output -raw game_server_public_ip',
                             returnStdout: true
                         ).trim()
+
+                        writeFile file = '../ansible/inventory.ini', text: """
+                        [web]
+                        ${SERVER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${KEY_PATH}
+                        """
                     }
                 }
             }
@@ -54,7 +59,7 @@ pipeline {
                     sh """
                     echo "[web]" >> inventory.ini
                     echo "${SERVER_IP}" >> inventory.ini
-                    ansible-playbook -i inventory.ini playbook/site.yml -u ubuntu --private-key ${KEY_PATH}
+                    ansible-playbook -i inventory.ini site.yml -u ubuntu --private-key ${KEY_PATH}
                     """
                 }
             }
