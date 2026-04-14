@@ -1,0 +1,19 @@
+---
+ - name: ping
+   ping:
+
+ - name: Install nginx
+   apt:
+    name: nginx
+    state: present
+
+ - name: nginx start
+   service:
+    name: nginx
+    state: started
+
+ - name: deploy website into nginx
+   synchronize:
+   src: website/
+   dest: /var/www/html/
+   notify: restart nginx    
