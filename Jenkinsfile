@@ -15,7 +15,7 @@ pipeline {
 
         stage('terraform init') {
             steps {
-                dir(terraform) {
+                dir('terraform') {
                     sh 'terraform init'
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('terraform apply') {
             steps {
-                dir(terraform) {
+                dir('terraform') {
                     sh 'terraform apply -auto-approve'
                 }
             }
