@@ -44,8 +44,7 @@ pipeline {
                             returnStdout: true
                         ).trim()
 
-                        writeFile file = '../ansible/inventory.ini', text: """
-                        [web]
+                        writeFile file = '../ansible/inventory.ini', text: """[web]
                         ${SERVER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${KEY_PATH}
                         """
                     }
