@@ -7,7 +7,7 @@ resource "aws_instance" "game_server" {
     instance_type = var.t3_small
     key_name = "devopskey"
     associate_public_ip_address = true
-    vpc_security_group_ids = ["aws_security_group.sg_game.id"]
+    vpc_security_group_ids = [aws_security_group.sg_game.id]
 
     tags = {
         Name = "game"
