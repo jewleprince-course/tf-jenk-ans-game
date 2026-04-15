@@ -44,11 +44,22 @@ pipeline {
                             returnStdout: true
                         ).trim()
 
-                        writeFile file = '../ansible/inventory.ini', text: """[web]
-                        ${SERVER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${KEY_PATH}
-                        """
+                        dir('ansible') {
+                            writeFile (
+                                file: 'inventory.ini'
+                                text: """[web]
+                                ${SERVER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${KEY_PATH}
+                                """
+                            )
+                        }
                     }
                 }
+            }
+        }
+
+        stage('debug inventory') {
+            steps {
+                sh 'cat ansible/inventory.ini'
             }
         }
 
@@ -56,9 +67,7 @@ pipeline {
             steps {
                 dir('ansible') {
                     sh """
-                    echo "[web]" >> inventory.ini
-                    echo "${SERVER_IP}" >> inventory.ini
-                    ansible-playbook -i inventory.ini site.yml -u ubuntu --private-key ${KEY_PATH}
+                    ansible-playbook -i inventory.ini site.yml
                     """
                 }
             }
