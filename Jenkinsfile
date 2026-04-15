@@ -52,6 +52,7 @@ pipeline {
                         }
                     }
                 }
+                echo "game server public ip: ${SERVER_IP}"
             }
         }
 
