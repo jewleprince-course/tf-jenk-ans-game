@@ -47,9 +47,7 @@ pipeline {
                         dir('ansible') {
                             writeFile (
                                 file: 'inventory.ini',
-                                text: """[web]
-                                ${SERVER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${KEY_PATH}
-                                """
+                                text: "[web]\n${SERVER_IP} ansible_user=ubuntu ansible_ssh_private_key_file=${KEY_PATH}\n"
                             )
                         }
                     }

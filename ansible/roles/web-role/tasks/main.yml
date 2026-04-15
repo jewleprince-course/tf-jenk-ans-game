@@ -12,8 +12,20 @@
     name: nginx
     state: started
 
+ - name: Clear web root
+   file:
+    path: /var/www/html/
+    state: absent
+
+ - name: recreate web root
+   file:
+    path: /var/www/html/
+    state: directory
+    mode: 0755
+
  - name: deploy website into nginx
-   synchronize:
-   src: website/
-   dest: /var/www/html/
-   notify: restart nginx    
+   copy:
+    src: website/
+    dest: /var/www/html/
+    mode: 0644
+    notify: restart nginx    
